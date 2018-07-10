@@ -1,0 +1,39 @@
+{% extends '_layouts/evolv_base.html' %}
+
+{% block headline %}<h1>Your Business Contacts</h1>{% endblock headline %}
+
+{% block content %}
+
+	<p><a href="{% url 'contactCreate' %}">Create New Contact</a></p>
+	{% for contact_type in data_objects %}
+		{% if contact_type.contacts %}
+			<h3>{{ contact_type.contact_type.desc }} List</h3>
+			<table class="table">
+				<tr>
+					<th>name</th>
+					<th>phone number</th>
+					<th>email</th>
+					<th>follow up</th>
+					<th>last contact</th>
+					<th>notes</th>
+					<th>action</th>
+				</tr>
+			{% for contact in contact_type.contacts %}
+				<tr>
+					<td><a href="/evolv/contact/details/{{ contact.id }}/">{{ contact.first_name }} {{ contact.last_name }}</a></td>
+					<td>{{ contact.phone }}</td>
+					<td>{{ contact.email }}</td>
+					<td>{{ contact.followup }}</td>
+					<td>{{ contact.last_contact }}</td>
+					<td>{{ contact.notes }}</td>
+					<td>
+						<a href="/evolv/contact/update/{{ contact.id }}/?next={{ request.path }}">update</a>, 
+						<a href="/evolv/contact/delete/{{ contact.id }}/?next={{ request.path }}">delete</a>
+					</td>
+				</tr>
+			{% endfor %}
+			</table>
+		{% endif %}
+	{% endfor %}
+
+{% endblock %}

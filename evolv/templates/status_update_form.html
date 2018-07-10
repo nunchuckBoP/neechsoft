@@ -1,0 +1,11 @@
+{% extends '_layouts/evolv_base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Status Update | {{ block.super }}{% endblock %}
+
+{% block headline %}<h1>Status Update</h1>{% endblock %}
+
+{% block content %}
+{% crispy form %}
+{% endblock %}

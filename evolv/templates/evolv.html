@@ -1,0 +1,29 @@
+{% extends '_layouts/evolv_base.html' %}
+
+{% block headline %}
+	<h1>Welcome to your evolv business site</h1>
+	{% if user.is_authenticated %}
+		<p>{{ user.first_name }} {{ user.last_name }}</p>
+	{% endif %}
+{% endblock headline %}
+
+{% block content %}
+	<p>
+		This site was created by Christopher Panici from Appleton, WI. It's intention
+		is to help you manage your evolv business. Keep track of expenses, contacts, and 
+		information relating to your contacts to keep you up to date and moving.
+	</p>
+	<br />
+	{% load static %}
+	<img src="{% static "evolv/evolv.png"  %}" alt="evolv image" />
+	<h4>Evolv Main Webpage</h4>
+	<p><a href="https://evolvhealth.com">Click here to get to evolvhealth.com</a><p>
+	<p><a href="http://ecenter.evolvhealth.com/UevolvHome.aspx">Click here to get to your back office page.</a></p>
+
+	<br /><br />
+	<img src="{% static "evolv/django_img.png" %}" alt="django" />
+	<h4>Your site was created with django!</h4>
+	<p><a href="https://www.djangoproject.com/overview">learn more about it here</a></p>
+	
+	
+{% endblock %}

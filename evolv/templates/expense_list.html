@@ -1,0 +1,50 @@
+{% extends '_layouts/evolv_base.html' %}
+
+{% load crispy_forms_tags %}
+{% block headline %}
+	<h1>Your Business Expenses</h1>
+	{% if year is not None %}
+		<h4>for the year of {{ year }}</h4>
+	{% endif %}
+{% endblock headline %}
+
+{% block content %}
+
+	{% if year_view %}
+		<p style="text-align:left;">
+			<a href="/evolv/expense/{{ prev_year }}/"><< Previous Year {{ prev_year }}</a>
+			<span style="float:right;"><a href="/evolv/expense/{{ next_year }}/">Next Year {{ next_year }} >></a></span>
+		</p>
+	{% endif %}
+	{% for data_object in data_objects %}
+		{% if data_object.expenses %}
+			<h3>{{ data_object.expense_type.desc }} List</h3>
+			<table class="table">
+				<tr>
+					<th>date</th>
+					<th>description</th>
+					<th>amount</th>
+					<th>action</th>
+				</tr>
+			{% for expense in data_object.expenses %}
+				<tr>
+					<td>{{ expense.date }}</td>
+					<td>{{ expense.desc }}</td>
+					<td>{{ expense.amount }}</td>
+					<td>
+						<a href="/evolv/expense/update/{{ expense.id }}/?next={{ request.path }}">update</a>, 
+						<a href="/evolv/expense/delete/{{ expense.id }}/?next={{ request.path }}">delete</a>
+					</td>
+				</tr>
+			{% endfor %}
+				<tr>
+					<th colspan=2>total</th>
+					<td>{{ data_object.total }}</td>
+					<td> </td>
+				</tr>
+			</table>
+		{% endif %}
+	{% endfor %}
+
+	{% crispy form %}
+{% endblock %}

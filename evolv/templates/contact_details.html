@@ -1,0 +1,80 @@
+{% extends '_layouts/evolv_base.html' %}
+
+{% load crispy_forms_tags %}
+{% block headline %}<h1>{{ contact.first_name }} {{ contact.last_name }}</h1>{% endblock headline %}
+
+{% block content %}
+	<table class="table">
+		<tr>
+			<th>first name</th>
+			<td>{{ contact.first_name }}</td>
+		</tr>
+		<tr>
+			<th>last name</th>
+			<td>{{ contact.last_name }}</td>
+		</tr>
+		<tr>
+			<th>phone</th>
+			<td>{{ contact.phone }}</td>
+		</tr>
+		<tr>
+			<th>email</th>
+			<td>{{ contact.email }}</td>
+		</tr>
+		<tr>
+			<th>created</th>
+			<td>{{ contact.created }}</td>
+		</tr>
+		<tr>
+			<th>follow up</th>
+			<td>{{ contact.followup }}</td>
+		</tr>
+		<tr>
+			<th>follow up period (days)</th>
+			<td>{{ contact.followup_period }}</td>
+		</tr>
+		<tr>
+			<th>last contact</th>
+			<td>{{ contact.last_contact }}</td>
+		</tr>
+		<tr>
+			<th>notes</th>
+			<td>{{ contact.notes }}</td>
+		</tr>
+		<tr>
+			<th>email alerts</th>
+			<td>{{ contact.email_alerts }}</td>
+		</tr>
+		<tr>
+			<th>action</th>
+			<td>
+				<a href='/evolv/contact/update/{{ contact.id }}/'>Update</a>, 
+				<a href='/evolv/contact/delete/{{ contact.id }}/'>Delete</a>
+			</td>
+		</tr>
+	</table>
+	<h3>Status Updates</h3>
+	<table class="table">
+		<tr>
+			<th>time</th>
+			<th>update</th>
+			<th>interest level</th>
+			<th>update last contact</th>
+			<th>actions</th>
+		</tr>
+		{% for sUpdate in status_updates %}
+			<tr>
+				<td>{{ sUpdate.date }}</td>
+				<td>{{ sUpdate.status }}</td>
+				<td>{{ sUpdate.interest_level }}</td>
+				<td>{{ sUpdate.update_last_contact_date }}</td>
+				<td>
+					<a href="/evolv/statusupdate/update/{{ sUpdate.id }}/">Update</a>,
+					<a href="/evolv/statusupdate/delete/{{ sUpdate.id }}/?next=/evolv/contact/details/{{ contact.id }}/">Delete</a>
+				</td>
+			<tr>
+		{% endfor %}
+	</table>
+	
+	{% crispy form %}
+{% endblock %}

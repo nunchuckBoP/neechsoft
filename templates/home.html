@@ -1,0 +1,8 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}<h1>Welcome to neechsoft.com</h1>{% endblock headline %}
+
+{% block content %}
+<p>Howdy{% if user.is_authenticated %} {{ user.username }} <a href='./evolv'>Continue to Evolv Site</a>{% endif %}!</p>
+<p>The infinite seems possible...</p>
+{% endblock %}

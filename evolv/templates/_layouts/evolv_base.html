@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% load static %}
+		<title>{% block title %}evolv{% endblock title %}</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		{% block css %}
+		{% endblock css %}
+		<style>
+			body{
+				padding-top: 100px;
+				padding-bottom: 20px;
+			}
+			.messages {
+				list-style: none;
+			}
+			.triangle-border {
+				position:relative;
+				padding:15px;
+				margin:1em 0 3em;
+				border:5px solid #5a8f00;
+				color:#333;
+				background:#fff;
+				/* css3 */
+				-webkit-border-radius:10px;
+				-moz-border-radius:10px;
+				border-radius:10px;
+			}
+			.triangle-border:before {
+				content:"";
+				position:absolute;
+				bottom:-20px; /* value = - border-top-width - border-bottom-width */
+				left:40px; /* controls horizontal position */
+				border-width:20px 20px 0;
+				border-style:solid;
+				border-color:#5a8f00 transparent;
+				/* reduce the damage in FF3.0 */
+				display:block;
+				width:0;
+			}
+			.triangle-border:after {
+				content:"";
+				position:absolute;
+				bottom:-13px; /* value = - border-top-width - border-bottom-width */
+				left:47px; /* value = (:before left) + (:before border-left) - (:after border-left) */
+				border-width:13px 13px 0;
+				border-style:solid;
+				border-color:#fff transparent;
+				/* reduce the damage in FF3.0 */
+				display:block;
+				width:0;
+			}
+			.footer{
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				padding: 1rem;
+				background-color: #efefef;
+			}
+			.footer.p{
+				left: 100px;
+			}
+		</style>
+		<link rel="shortcut icon" href={% static "evolv/e.png" %} />
+	</head>
+	<body>
+		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/evolv/">evolv</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a href="{% url 'contacts' %}">Contacts</a></li>
+					<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Expenses<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{% url 'expenses' %}">All</a></li>
+							<li><a href="{% url 'expenseRedirectCurrentYear' %}">Current Year</a></li>
+						</ul>
+					</li>
+					<li><a href="{% url 'notes' %}">Notes</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+				  {% if not user.is_authenticated %}
+				  <li><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+				  <li><a href="{% url 'evolvLogin' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+				  {% else %}
+				  <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{ user.username }}</a></li>
+				  <li><a href="{% url 'evolvLogout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+				  {% endif %}
+				</ul>
+			</div>
+		</div>
+		{% if messages %}
+			<ul class="messages">
+				{% for message in messages %}
+					<li{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+		<div class="jumbotron">
+			<div class="container">{% block headline %}{% endblock headline %}</div>
+		</div>
+		<div class="container">
+			{% block content %}{% endblock content %}
+		</div>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		{% block js %}{% endblock js %}
+	</body>
+</html>

@@ -1,0 +1,22 @@
+{% extends '_layouts/evolv_base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block headline %}
+	<h1>Notes</h1>
+{% endblock headline %}
+
+{% block content %}
+	<div class="triangle-border">
+		<h3>Hey {{ user.username }}. You can add notes here of any type to keep track of what is happening in your business.</h3>
+	</div>
+
+	{% for note in note_objects %}
+		<div class="triangle-border">
+			<p>{{ note.timestamp }}</p>
+			<h3>{{ note.notes }}</h3>
+		</div>
+	{% endfor %}
+
+	{% crispy form %}
+{% endblock %}
